@@ -22,7 +22,7 @@ Questions? Contact Stride on [Twitter](https://twitter.com/stride_zone), [Discor
 
 
 ##### Projects who already airdropped to stTokens
-- Dymention
+- Dymension
 - Pyth Network
 - Neutron
 
