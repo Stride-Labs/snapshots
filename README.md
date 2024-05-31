@@ -5,7 +5,7 @@ Stride regularly uploads snapshots of all stTIA, stATOM, and stOSMO holders to m
 
 ### Snapshot data
 
-Regular stToken snapshots will be uploaded to this repository beginning the week of Feb 5, 2024.
+Regular stToken snapshots will be uploaded to this repository beginning the week of Feb 5, 2024. [Data Definition and Availability](DataDefinition.md)
 
 Projects who wish to include stToken holders in their airdrops can download their desired snapshot.
 
