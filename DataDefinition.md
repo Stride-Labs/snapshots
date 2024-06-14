@@ -1,15 +1,15 @@
 # Snapshot Data Definitions
 Each day a new snapshot file csv is created and uploaded to this repo based on the observed holdings and defi positions for addresses on integrated chains.  Stride produces this data in conjuction with Numia through a mix of chain state snapshots and queries.  The snapshots are taken at slightly different random times each day and only represent the instantaneous value at that moment.  All integrations are captured within a 5 minute window (so the same funds cannot be moved across integrations and double counted by accident).
 
-Each csv row represents one balance for a particular integration type uniquely defined by the combination of chain, denom, address, application-id.  Denoms and therefore also the amounts are always represented in the microunit, so for example `denom=stuatom` and `amount=2603942` would mean 2.6 stAtom because the micro denom of uatom means 1e6; similarly the micro unit adydx means 1e18.
+Each csv row represents one balance for a particular integration type uniquely defined by the combination of chain, denom, address, application-id.  Denoms and amounts are always represented in the microunit, so for example `denom=stuatom` and `amount=1500000` would mean `1.5 stATOM`; similarly `denom=stadydx` and `amount=1500000000000000000` means `1.5 stDYDX`.
 
-The address_on_chain field is the address of the owner of these funds on the chain itself. Because only some chain address types can be automatically converted to other chain addresses, the address_on_stride field is only present for certain integrations.  When present, the address_on_stride is a useful tool to track the same owner's holdings across different chains and applications.
+The `address_on_chain` field is the address of the owner of these funds on the chain itself. Because only some chain address types can be automatically converted to other chain addresses, the `address_on_stride` field is only present for certain integrations.  When present, the `address_on_stride` is a useful tool to track the same owner's holdings across different chains and applications.
 
-The application-id field uniquely defines what specific integration this row is tracking.  There are the more general application and category fields, but these are mostly useful for grouping similar types of integrations at a high level. When `category=balance` and `application=bank`, this simply means funds are being held in an address on that particular chain.  For example, if `chain=neutron`, `denom=stadydx`, `application-id=neutron-bank` this row represents someone holding stDYDX on neutron chain in liquid form -- not locked into any defi integration.  Note that certain bank applications are actually built on top of other chains, so `application-id=demex-bank` is actually on the `chain=carbon`
+The `application_id` field uniquely defines what specific integration this row is tracking.  There are the more general application and category fields, but these are mostly useful for grouping similar types of integrations at a high level. When `category=balance` and `application=bank`, this simply means funds are being held in an address on that particular chain.  For example, if `chain=neutron`, `denom=stadydx`, `application-id=neutron-bank` this row represents someone holding `stDYDX` on neutron chain in liquid form -- not locked into any defi integration.  Note that certain bank applications are actually built on top of other chains, so `application_id=demex-bank` is actually on the `chain=carbon`
 
 
 ### Defi Application Types
-The most common types of defi integrations are liquidity being provided to a DEX, and positions in a lending protocol.  When there is a DEX liquidity position, there are always two different denoms paired together but we might only track whichever one is relevant to our rewards tracking usecase.  Sometimes non-staked tokens are tracked as part of liquidity because our rewards program would incentivize both sides of the pool -- for example when `application-id=osmosis-cl-stTIA-TIA-1428` there will be rows for both `denom=utia` and `denom=stutia` because both sides counted towards our rewards program.  If you only care about the stTokens make sure to correctly filter rows based on the denom column.
+The most common types of defi integrations are liquidity being provided to a DEX, and positions in a lending protocol.  When there is a DEX liquidity position, there are always two different denoms paired together but both are not guaranteed to be in the dataset.  
 
 There are different types of liquidity positions.  So 'xyk' represents a traditional balanced pool type for a multiplicative market maker -- if we track both sides of the pool they are likely to be of roughly equal value (but because of denom differences, the amounts can differ). On the other hand 'pcl' or 'cl' pools are concentrated liquidity positions where one side can be weighted more heavily than the other and there is no guarantee that the amounts a single address has provided are similar on each side. 
 
@@ -54,8 +54,7 @@ These are all the integrations tracked at any time by the application-id and for
 	- (osmosis) **mars-lending-collateral**: (utia, stutia, stuatom, stuosmo)
 	- **umee-lending-borrowed**: (utia, stutia, stuatom)
 	- **umee-lending-collateral**: (utia, stutia, stuatom)
-
-
+	
 
 ### Integrations Tracked by Date
 
